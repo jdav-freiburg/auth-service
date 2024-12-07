@@ -68,6 +68,16 @@ DAV360: Onboarding über Geschäftsstelle
 
 Siehe auch [Authentik > Installation > Docker Compose](https://docs.goauthentik.io/docs/install-config/install/docker-compose).
 
+Für den Mail-Service muss in der `docker-compose.yaml` folgende Einstellung hinterlegt werden
+
+```yaml
+networks:
+  # Netzerkname "mail", dieses Netzwerk wird für den Container des Mail-Services angelegt
+  mail:
+    # Weil dieses Netzwerk in einem separaten Prozess erstellt wird, muss es als "external" deklariert werden
+    external: true
+```
+
 `.env` Datei anlegen und E-Mail Credentials für den E-Mail Relay Service hinterlegen.
 
 ```ini
