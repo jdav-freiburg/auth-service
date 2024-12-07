@@ -76,6 +76,18 @@ networks:
   mail:
     # Weil dieses Netzwerk in einem separaten Prozess erstellt wird, muss es als "external" deklariert werden
     external: true
+
+server:
+  [...]
+  networks:
+    - mail
+    - default
+
+worker:
+  [...]
+  networks:
+    - mail
+    - default
 ```
 
 `.env` Datei anlegen und E-Mail Credentials für den E-Mail Relay Service hinterlegen.
