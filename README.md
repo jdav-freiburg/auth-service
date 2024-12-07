@@ -140,7 +140,9 @@ docker compose exec worker ak test_email your-email@example.net
 
 [Authentic Nextcloud](https://docs.goauthentik.io/integrations/services/nextcloud/) mit OpenID Connect.
 
-#### [Authentik: Provider und Anwendung anlegen](https://docs.goauthentik.io/integrations/services/nextcloud/#provider-and-application)
+#### Authentik: Provider und Anwendung anlegen
+
+See also: [Authentik: Provider und Anwendung anlegen](https://docs.goauthentik.io/integrations/services/nextcloud/#provider-and-application)
 
 Authentik > Admin > Applications > Providers > Create
 
@@ -148,6 +150,8 @@ Authentik > Admin > Applications > Providers > Create
 Name: Nextcloud
 Authorization flow: default-provider-authorization-explicit-consent (Authorize Application)
 Client type: Confidential
+Client ID: will be needed for Nextcloud
+Client Secret: will be needed for Nextcloud
 Redirect URIs/Origins (RegEx): https://cloud.jdav-freiburg.de/apps/user_oidc/code
 Signing key: Any valid certificate
 
@@ -155,6 +159,8 @@ Advanced Protocol Settings:
   Scopes:
     authentik default Oauth Mapping email
     authentik default Oauth Mapping profile
+  # Use Authentik Login-Email as ID
+  Subject Mode: Based on the User's Email
   Include claims in ID token: ✔️
 ```
 
@@ -166,5 +172,34 @@ Slug: nextcloud
 Provider: Nextcloud
 ```
 
-2. In Nextcloud die OpenID App installieren: Menü > Apps > Einbindung > OpenID Connect user backend
-3. In Nextcloud einen neuen OpenID Provider anlegen: Menü > Einstellungen > OpenID Connect
+### Nextcloud OpenID App und Einstellungen
+
+See also: [Authentik: Nextcloud Integration](https://docs.goauthentik.io/integrations/services/nextcloud/#nextcloud-1)
+
+Nextcloud > Menu > Apps > Integration > "OpenID Connect user backend" installieren
+
+Nextcloud > Menu > Administration Settings > OpenID Connect > Register New Provider
+
+- Discovery endpoint: the slug "nextcloud" was set earlier in Authentik (see above)
+- Discovery endpoint: the domain can be replaced with an internal FQDN when behind a Reverse Proxy with [extra configuration](https://docs.goauthentik.io/integrations/services/nextcloud/#extra-configuration-when-running-behind-a-reverse-proxy)
+
+```
+Identifier: Authentik
+Client ID: The client ID from the provider
+Client secret: The secret ID from the provider
+Discovery endpoint: https://cloud.jdav-freiburg.de/application/o/nextcloud/.well-known/openid-configuration
+Scope: email profile
+
+Attribute mapping
+  User ID mapping: sub
+
+Extra attributes mapping
+  Display name mapping: name
+  Email mapping: email
+
+Authentication and Access Control Settings
+  # Use Authentik Groups in Nextcloud
+  ✔️ Use group provisioning
+  # Maybe not needed?
+  ✔️ Send ID token hint on logout
+```
