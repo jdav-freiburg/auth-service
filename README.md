@@ -66,6 +66,8 @@ DAV360: Onboarding über Geschäftsstelle
 
 ## Authentik einrichten
 
+Siehe auch [Authentik > Installation > Docker Compose](https://docs.goauthentik.io/docs/install-config/install/docker-compose).
+
 `.env` Datei anlegen und E-Mail Credentials für den E-Mail Relay Service hinterlegen.
 
 ```ini
@@ -111,3 +113,36 @@ E-Mail Versand testen mit
 ```shell
 docker compose exec worker ak test_email your-email@example.net
 ```
+
+### Nextcloud Anbindung
+
+[Authentic Nextcloud](https://docs.goauthentik.io/integrations/services/nextcloud/) mit OpenID Connect.
+
+#### [Authentik: Provider und Anwendung anlegen](https://docs.goauthentik.io/integrations/services/nextcloud/#provider-and-application)
+
+Authentik > Admin > Applications > Providers > Create
+
+```
+Name: Nextcloud
+Authorization flow: default-provider-authorization-explicit-consent (Authorize Application)
+Client type: Confidential
+Redirect URIs/Origins (RegEx): https://<nextcloud-url>/apps/user_oidc/code
+Signing key: Any valid certificate
+
+Advanced Protocol Settings:
+  Scopes:
+    authentik default Oauth Mapping email
+    authentik default Oauth Mapping profile
+  Include claims in ID token: ✔️
+```
+
+Authentik > Admin > Applications > Applications > Create
+
+```
+Name: Nextcloud
+Slug: nextcloud
+Provider: Nextcloud
+```
+
+2. In Nextcloud die OpenID App installieren: Menü > Apps > Einbindung > OpenID Connect user backend
+3. In Nextcloud einen neuen OpenID Provider anlegen: Menü > Einstellungen > OpenID Connect
