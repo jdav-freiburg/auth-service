@@ -52,10 +52,62 @@ DAV360: Onboarding über Geschäftsstelle
 ## Authentik
 
 - Mit Docker Compose einrichten [url](https://docs.goauthentik.io/docs/install-config/install/docker-compose)
-- E-Mail Service einreichten und mit `docker compose exec worker ak test_email ku@extradat.de` testen
+- E-Mail Service einreichten und mit `docker compose exec worker ak test_email your-email@example.net` testen
 - Self-Service Workflow definieren, einrichten, dokumentieren
 - Gruppen definieren (Berggämse, ...)
 - Permissions definieren
 - Rollen definieren (UserManager, ...)
 - Einladungsflow
 - Anwendung einbinden (private Nextcloud Kasimir)
+
+### Workflow: Ersteinrichtung
+
+
+
+## Authentik einrichten
+
+`.env` Datei anlegen und E-Mail Credentials für den E-Mail Relay Service hinterlegen.
+
+```ini
+# SMTP Host Emails are sent to
+AUTHENTIK_EMAIL__HOST=<host>
+AUTHENTIK_EMAIL__PORT=<port>
+# Optionally authenticate (don't add quotation marks to your password)
+AUTHENTIK_EMAIL__USERNAME=
+AUTHENTIK_EMAIL__PASSWORD=
+# Use StartTLS
+AUTHENTIK_EMAIL__USE_TLS=false
+# Use SSL
+AUTHENTIK_EMAIL__USE_SSL=false
+AUTHENTIK_EMAIL__TIMEOUT=10
+# Email address authentik will send from, should have a correct @domain
+AUTHENTIK_EMAIL__FROM=<authentik@localhost>
+AUTHENTIK_ERROR_REPORTING__ENABLED=true
+```
+
+Postgres-Password und Authentik Secret Key generieren
+
+```shell
+echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
+echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
+```
+
+Ggf. Ports in der `.env` setzen, die default Ports sind `9000` und `9443`
+
+```ini
+# COMPOSE_PORT_HTTP=80
+# COMPOSE_PORT_HTTPS=443
+```
+
+Authentik starten mit
+
+```shell
+docker compose pull
+docker compose up -d
+```
+
+E-Mail Versand testen mit
+
+```shell
+docker compose exec worker ak test_email your-email@example.net
+```
