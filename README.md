@@ -136,7 +136,7 @@ Authentik > Admin > Applications > Providers > Create
 Name: Nextcloud
 Authorization flow: default-provider-authorization-explicit-consent (Authorize Application)
 Client type: Confidential
-Redirect URIs/Origins (RegEx): https://<nextcloud-url>/apps/user_oidc/code
+Redirect URIs/Origins (RegEx): https://cloud.jdav-freiburg.de/apps/user_oidc/code
 Signing key: Any valid certificate
 
 Advanced Protocol Settings:
