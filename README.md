@@ -130,7 +130,7 @@ docker compose pull
 docker compose up -d
 ```
 
-E-Mail Versand testen mit
+E-Mail Versand testen (erfordert, dass der über [Mail-Service](https://github.com/jdav-freiburg/mail-relay) bereits läuft)
 
 ```shell
 docker compose exec worker ak test_email your-email@example.net
