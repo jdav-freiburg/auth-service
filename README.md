@@ -1,9 +1,5 @@
 # JDAV Auth
 
-- Ist-Zustand
-- Requirements
-- Actions
-
 ## Ist-Zustand
 
 Services
@@ -16,7 +12,7 @@ Services
 Neue Juleis anzulegen ist momentan aufwendig, man muss vier verschiedene Accounts / User anlegen.
 Kein On- oder Offboarding.
 Workflow unklar.
-Security fragwürdigt (weil selbst entwickelt und auf dem Stand von vor vier Jahren)
+Security fragwürdig (weil selbst entwickelt und auf dem Stand von vor vier Jahren)
 
 Aktueller Onboarding-Prozess Auth-Manager (wird nur beim Depot genutzt):
 
@@ -45,43 +41,18 @@ DAV360: Onboarding über Geschäftsstelle
 ....
 Todos siehe [github issues](https://github.com/jdav-freiburg/auth-service/issues)
 
-## Authentik
-
-- Mit Docker Compose einrichten [url](https://docs.goauthentik.io/docs/install-config/install/docker-compose)
-- E-Mail Service einreichten und mit `docker compose exec worker ak test_email your-email@example.net` testen
-- Self-Service Workflow definieren, einrichten, dokumentieren
-- Gruppen definieren (Berggämse, ...)
-- Permissions definieren
-- Rollen definieren (UserManager, ...)
-- Einladungsflow
-
 ## Authentik Grundeinrichtung
 
 Siehe auch [Authentik > Installation > Docker Compose](https://docs.goauthentik.io/docs/install-config/install/docker-compose).
 
-Für den Mail-Service muss in der `docker-compose.yaml` folgende Einstellung hinterlegt werden
+Postgres-Password und Authentik Secret Key generieren
 
-```yaml
-networks:
-  # Netzerkname "mail", dieses Netzwerk wird für den Container des Mail-Services angelegt
-  mail:
-    # Weil dieses Netzwerk in einem separaten Prozess erstellt wird, muss es als "external" deklariert werden
-    external: true
-
-server:
-  [...]
-  networks:
-    - mail
-    - default
-
-worker:
-  [...]
-  networks:
-    - mail
-    - default
+```shell
+echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
+echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
 ```
 
-`.env` Datei anlegen und E-Mail Credentials für den E-Mail Relay Service hinterlegen.
+E-Mail Credentials für den E-Mail Relay Service hinterlegen.
 
 ```ini
 # SMTP Host Emails are sent to
@@ -97,14 +68,8 @@ AUTHENTIK_EMAIL__USE_SSL=false
 AUTHENTIK_EMAIL__TIMEOUT=10
 # Email address authentik will send from, should have a correct @domain
 AUTHENTIK_EMAIL__FROM=support@jdav-freiburg.de
-AUTHENTIK_ERROR_REPORTING__ENABLED=true
-```
-
-Postgres-Password und Authentik Secret Key generieren
-
-```shell
-echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
-echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
+# Auskommentieren um Benachrichtigungen zu Fehlern per Mail zu bekommen
+# AUTHENTIK_ERROR_REPORTING__ENABLED=true
 ```
 
 Ggf. Ports in der `.env` setzen, die default Ports sind `9000` und `9443`
@@ -124,7 +89,7 @@ docker compose up -d
 E-Mail Versand testen (erfordert, dass der über [Mail-Service](https://github.com/jdav-freiburg/mail-relay) bereits läuft)
 
 ```shell
-docker compose exec worker ak test_email your-email@example.net
+docker compose exec worker ak test_email <your-email@example.net>
 ```
 
 ### Nextcloud Anbindung
