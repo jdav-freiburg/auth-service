@@ -42,13 +42,8 @@ DAV360: Onboarding über Geschäftsstelle
 ## Actions / TODOs
 
 - [x] Authentik Test-Instanz
-- (alten Auth-Manager dokumentieren: Workflows, APIs)
-- Authentik testen / evaluieren
-  - [x] Nextcloud Einbindung testen
-  - Depot-Einbindung testen / Neu entwickeln
-- Migration aus Auth-Manager & Nextcloud
-  - Mapping der User & User-Gruppen & Berechtigungen
-- [x] Test: Anwendung einbinden (private Nextcloud Kasimir)
+....
+Todos siehe [github issues](https://github.com/jdav-freiburg/auth-service/issues)
 
 ## Authentik
 
