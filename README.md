@@ -86,7 +86,9 @@ docker compose pull
 docker compose up -d
 ```
 
-E-Mail Versand testen (erfordert, dass der über [Mail-Service](https://github.com/jdav-freiburg/mail-relay) bereits läuft)
+Ersteinrichtung über `http://localhost:9000/if/flow/initial-setup/`, es muss eine E-Mail Adresse und ein Passwort für den Admin-Account `akadmin` eingegeben werden.
+
+E-Mail Versand testen (erfordert, dass der [Mail-Service](https://github.com/jdav-freiburg/mail-relay) bereits läuft)
 
 ```shell
 docker compose exec worker ak test_email <your-email@example.net>
