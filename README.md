@@ -42,12 +42,13 @@ DAV360: Onboarding über Geschäftsstelle
 ## Actions / TODOs
 
 - [x] Authentik Test-Instanz
-- (Auth-Manager dokumentieren: Workflows, APIs)
+- (alten Auth-Manager dokumentieren: Workflows, APIs)
 - Authentik testen / evaluieren
-  - Nextcloud Einbindung testen
+  - [x] Nextcloud Einbindung testen
   - Depot-Einbindung testen / Neu entwickeln
 - Migration aus Auth-Manager & Nextcloud
   - Mapping der User & User-Gruppen & Berechtigungen
+- [x] Test: Anwendung einbinden (private Nextcloud Kasimir)
 
 ## Authentik
 
@@ -58,11 +59,6 @@ DAV360: Onboarding über Geschäftsstelle
 - Permissions definieren
 - Rollen definieren (UserManager, ...)
 - Einladungsflow
-- Anwendung einbinden (private Nextcloud Kasimir)
-
-### Workflow: Ersteinrichtung
-
-
 
 ## Authentik Grundeinrichtung
 
