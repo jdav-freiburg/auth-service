@@ -203,3 +203,5 @@ Authentication and Access Control Settings
 ## Authentik: Backups
 
 Einstellungen, Providers, Policies, etc. werden in einer PostgreSQL Datenbank gespeichert. Vorschaubilder für Anwendungen werden im Ordner `/media` abgespeichert. Diese beiden Orte sollten bei einem Backup berücksichtigt werden.
+
+Ggf. auch das Volume `redis:/data` sichern um "Inconviniences" zu vermeiden ([github issue](https://github.com/goauthentik/authentik/issues/8411#issuecomment-1940493275))
