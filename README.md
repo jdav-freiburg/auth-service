@@ -64,7 +64,7 @@ DAV360: Onboarding über Geschäftsstelle
 
 
 
-## Authentik einrichten
+## Authentik Grundeinrichtung
 
 Siehe auch [Authentik > Installation > Docker Compose](https://docs.goauthentik.io/docs/install-config/install/docker-compose).
 
@@ -203,3 +203,7 @@ Authentication and Access Control Settings
   # Maybe not needed?
   ✔️ Send ID token hint on logout
 ```
+
+## Authentik: Backups
+
+Einstellungen, Providers, Policies, etc. werden in einer PostgreSQL Datenbank gespeichert. Vorschaubilder für Anwendungen werden im Ordner `/media` abgespeichert. Diese beiden Orte sollten bei einem Backup berücksichtigt werden.
